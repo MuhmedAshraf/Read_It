@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:readit/Core/utlis/app_routers.dart';
 
 void main() {
   runApp(const ReadIt());
@@ -9,21 +10,12 @@ class ReadIt extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Home(),
+    return   MaterialApp.router(
+      debugShowCheckedModeBanner: false,
+      routerConfig: AppRouter.router,
+
     );
   }
 }
 
-class Home extends StatelessWidget {
-  const Home({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('ReadIt'),
-      ),
-    );
-  }
-}
