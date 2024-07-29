@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:readit/Core/shared_widgets/custom_loading.dart';
+import 'package:readit/Core/utlis/app_routers.dart';
 import 'package:readit/Features/02.auth/presentation/view_model/user_cubit/user_state.dart';
 import '../view_model/user_cubit/user_cubit.dart';
 import 'widgets/already_have_an_account_widget.dart';
@@ -15,15 +18,23 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: BlocConsumer<UserCubit, UserState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return Scaffold(
-            backgroundColor: const Color(0xffEEF1F3),
-            body: Column(
-              children: [
-                PageHeader(),
-                Expanded(
+      child: Scaffold(
+        backgroundColor: const Color(0xffEEF1F3),
+        body: Column(
+          children: [
+            PageHeader(),
+            BlocConsumer<UserCubit, UserState>(
+              listener: (context, state) {
+                if(state is SignUpFailure){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.errMessage)));
+                }
+                else if(state is SignUpSuccess){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
+                  GoRouter.of(context).push('/');
+                }
+              },
+              builder: (context, state) {
+                return Expanded(
                   child: Container(
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -87,9 +98,11 @@ class SignUpScreen extends StatelessWidget {
                             ),
                             const SizedBox(height: 22),
                             //!Sign Up Button
-                            CustomFormButton(
+                           state is SignUpLoading? const CustomLoading(): CustomFormButton(
                               innerText: 'Signup',
-                              onPressed: () {},
+                              onPressed: () {
+                                context.read<UserCubit>().signUp();
+                              },
                             ),
                             const SizedBox(height: 18),
                             //! Already have an account widget
@@ -100,11 +113,11 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-              ],
+                );
+              },
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }

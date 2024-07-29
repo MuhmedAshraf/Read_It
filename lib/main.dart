@@ -1,9 +1,16 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:readit/Core/cache_helper/cache_helper.dart';
 import 'package:readit/Core/utlis/app_routers.dart';
+import 'package:readit/Features/02.auth/data/repo/auth_repo.dart';
 import 'package:readit/Features/02.auth/presentation/view_model/user_cubit/user_cubit.dart';
 
+import 'Core/Api_helper/dio_consumer.dart';
+
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  CacheHelper().init();
   runApp(const ReadIt());
 }
 
@@ -13,14 +20,17 @@ class ReadIt extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => UserCubit(),
+      create: (context) => UserCubit(
+        authRepo: AuthRepo(
+          api: DioConsumer(
+            dio: Dio(),
+          ),
+        ),
+      ),
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         routerConfig: AppRouter.router,
-
       ),
     );
   }
 }
-
-

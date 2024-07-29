@@ -24,7 +24,7 @@ class AlreadyHaveAnAccountWidget extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () => {
-            GoRouter.of(context).push(AppRouter.kSignUpScreen)
+            GoRouter.of(context).push(AppRouter.kSignInScreen)
           },
             child: const Text(
               'Log-in',

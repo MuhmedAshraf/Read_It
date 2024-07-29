@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:readit/Core/shared_widgets/custom_loading.dart';
 import 'package:readit/Features/02.auth/presentation/view_model/user_cubit/user_state.dart';
 import 'package:readit/Features/02.auth/presentation/views/widgets/custom_input_field.dart';
 import 'package:readit/Features/02.auth/presentation/views/widgets/dont_have_an_account.dart';
@@ -16,15 +17,22 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return SafeArea(
-      child: BlocConsumer<UserCubit, UserState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          return Scaffold(
-            backgroundColor: const Color(0xffEEF1F3),
-            body: Column(
-              children: [
-                PageHeader(),
-                Expanded(
+      child: Scaffold(
+        backgroundColor: const Color(0xffEEF1F3),
+        body: Column(
+          children: [
+            PageHeader(),
+            BlocConsumer<UserCubit, UserState>(
+              listener: (context, state) {
+                if(state is SignInFailure){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.errMessage)));
+                }
+                else if(state is SignInSuccess){
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(state.message)));
+                }
+              },
+              builder: (context, state) {
+                return Expanded(
                   child: Container(
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -59,9 +67,11 @@ class SignInScreen extends StatelessWidget {
                             ForgetPasswordWidget(size: size),
                             const SizedBox(height: 20),
                             //!Sign In Button
-                            CustomButton(
+                           state is SignInLoading? const CustomLoading(): CustomButton(
                               innerText: 'Sign In',
-                              onPressed: () {},
+                              onPressed: () {
+                                context.read<UserCubit>().signIn();
+                              },
                             ),
                             const SizedBox(height: 18),
                             //! Don't Have An Account ?
@@ -72,11 +82,11 @@ class SignInScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-              ],
+                );
+              },
             ),
-          );
-        },
+          ],
+        ),
       ),
     );
   }

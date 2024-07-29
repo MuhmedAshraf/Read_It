@@ -3,10 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:readit/Features/02.auth/presentation/view_model/user_cubit/user_state.dart';
 
+import '../../../data/repo/auth_repo.dart';
+
 class UserCubit extends Cubit<UserState> {
+  UserCubit({required this.authRepo}) : super(UserInitial());
 
-
-  UserCubit() : super(UserInitial());
+  final AuthRepo authRepo;
 
   //Sign in Form key
   GlobalKey<FormState> signInFormKey = GlobalKey();
@@ -44,13 +46,37 @@ class UserCubit extends Cubit<UserState> {
   //update Phone
   TextEditingController newPhone = TextEditingController();
 
+  signIn() async {
+    emit(SignInLoading());
+    final response = await authRepo.signIn(
+      email: signInEmail.text,
+      password: signInPassword.text,
+    );
+    response.fold(
+      (errMessage) => emit(SignInFailure(errMessage: errMessage)),
+      (user) => emit(SignInSuccess(message: user.message)),
+    );
+  }
 
+  uploadProfilePic(XFile image) {
+    profilePic = image;
+    emit(UploadProfilePic());
+  }
 
-
-
-
-
-
-
+  signUp() async {
+    emit(SignUpLoading());
+    final response = await authRepo.signUp(
+      email: signUpEmail.text,
+      password: signUpPassword.text,
+      confirmPassword: confirmPassword.text,
+      phone: signUpPhoneNumber.text,
+      name: signUpName.text,
+      profilePic: profilePic!,
+    );
+    response.fold(
+      (errMessage) => emit(SignInFailure(errMessage: errMessage)),
+      (user) => emit(SignUpSuccess(message: user.message)),
+    );
+  }
 
 }
