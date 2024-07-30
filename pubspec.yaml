@@ -43,6 +43,7 @@ dependencies:
   shared_preferences: ^2.1.0
   dartz: ^0.10.1
 
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -84,13 +85,20 @@ flutter:
   fonts:
     - family: NotoSerif
       fonts:
-        - asset: assets/fonts/NotoSerif-Regular.ttf
-        - asset: assets/fonts/NotoSerif-Bold.ttf
+        - asset: assets/fonts/NotoSerif/NotoSerif-Regular.ttf
+        - asset: assets/fonts/NotoSerif/NotoSerif-Bold.ttf
           weight: 700
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito/Nunito-BlackItalic.ttf
+        - asset: assets/fonts/Nunito/Nunito-Black.ttf
+        - asset: assets/fonts/Nunito/Nunito-Bold.ttf
+        - asset: assets/fonts/Nunito/Nunito-ExtraBold.ttf
+        - asset: assets/fonts/Nunito/Nunito-Light.ttf
+        - asset: assets/fonts/Nunito/Nunito-Regular.ttf
+        - asset: assets/fonts/Nunito/Nunito-Medium.ttf
+        - asset: assets/fonts/Nunito/Nunito-SemiBold.ttf
+        - asset: assets/fonts/Nunito/Nunito-ExtraLight.ttf
   #         weight: 700
   #
   # For details regarding fonts from package dependencies,
