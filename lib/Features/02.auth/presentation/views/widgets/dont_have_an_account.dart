@@ -28,7 +28,7 @@ class DontHaveAnAccountWidget extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () => {
-            GoRouter.of(context).push(AppRouter.kSignUpScreen)
+            GoRouter.of(context).pushReplacement(AppRouter.kSignUpScreen)
           },
             child: const Text(
               'Sign-up',

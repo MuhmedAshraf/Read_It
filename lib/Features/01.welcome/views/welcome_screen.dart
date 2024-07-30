@@ -27,7 +27,7 @@ class WelcomeScreen extends StatelessWidget {
                 CustomButton(
                   innerText: 'Log In',
                   onPressed: () {
-                    GoRouter.of(context).push(AppRouter.kSignInScreen);
+                    GoRouter.of(context).pushReplacement(AppRouter.kSignInScreen);
                   },
                 ),
                 const SizedBox(
@@ -36,7 +36,7 @@ class WelcomeScreen extends StatelessWidget {
                 CustomButton(
                   innerText: 'Sign Up',
                   onPressed: () {
-                    GoRouter.of(context).push(AppRouter.kSignUpScreen);
+                    GoRouter.of(context).pushReplacement(AppRouter.kSignUpScreen);
                   },
                 ),
                 const SizedBox(
