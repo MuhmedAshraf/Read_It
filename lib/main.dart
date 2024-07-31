@@ -37,7 +37,7 @@ void main() {
 // }
 //
 class ReadIt extends StatelessWidget {
-  const ReadIt({Key? key}) : super(key: key);
+  const ReadIt({super.key});
 
   @override
   Widget build(BuildContext context) {
